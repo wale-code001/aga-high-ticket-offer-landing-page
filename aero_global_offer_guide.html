@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aero Global Aviation — Flight Training Programs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #0a0f1e;
+    --navy2:   #111827;
+    --sky:     #1e90ff;
+    --sky-lt:  #38b6ff;
+    --sky-dk:  #0c447c;
+    --gold:    #f5a623;
+    --gold-dk: #c47d0a;
+    --green:   #1d9e75;
+    --green-dk:#0f6e56;
+    --white:   #ffffff;
+    --off:     #f0f5ff;
+    --muted:   #8a9bbf;
+    --border:  rgba(255,255,255,0.08);
+    --disp:    'Barlow Condensed', sans-serif;
+    --body:    'Barlow', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--navy);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(30,144,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 90% 80%, rgba(245,166,35,0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 72px 5% 64px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    font-family: var(--disp);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sky-lt);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .brand::before,
+  .brand::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--sky-lt);
+    opacity: 0.5;
+  }
+
+  .main-headline {
+    font-family: var(--disp);
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .main-headline .line2 { color: var(--sky); display: block; }
+
+  .main-sub {
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 36px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .header-pills {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    font-family: var(--disp);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 2px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ── SECTION INTRO ── */
+  .section-intro {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 56px 5% 48px;
+  }
+  .section-intro .eyebrow {
+    font-family: var(--disp);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .section-intro h2 {
+    font-family: var(--disp);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+  }
+  .section-intro p {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 540px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* ── OFFERS GRID ── */
+  .offers {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 5% 80px;
+  }
+
+  /* ── OFFER CARD ── */
+  .offer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+  }
+  .offer:first-child { border-radius: 12px 0 0 12px; }
+  .offer:last-child  { border-radius: 0 12px 12px 0; }
+  .offer:not(:first-child) { border-left: none; }
+
+  .offer:hover { transform: translateY(-4px); z-index: 2; }
+  .offer.featured {
+    border-color: rgba(30,144,255,0.4);
+    background: rgba(30,144,255,0.04);
+    transform: translateY(-8px);
+    z-index: 2;
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(30,144,255,0.2), 0 32px 64px rgba(0,0,0,0.3);
+  }
+
+  /* Tier badge */
+  .offer-badge {
+    font-family: var(--disp);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .offer-badge .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .offer-1 .offer-badge { background: rgba(29,158,117,0.15); color: #5dcaa5; }
+  .offer-1 .offer-badge .badge-dot { background: #5dcaa5; }
+  .offer-2 .offer-badge { background: rgba(30,144,255,0.15); color: var(--sky-lt); }
+  .offer-2 .offer-badge .badge-dot { background: var(--sky-lt); }
+  .offer-3 .offer-badge { background: rgba(245,166,35,0.15); color: var(--gold); }
+  .offer-3 .offer-badge .badge-dot { background: var(--gold); }
+
+  /* Header */
+  .offer-header {
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .offer-name {
+    font-family: var(--disp);
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+  }
+  .offer-1 .offer-name { color: #5dcaa5; }
+  .offer-2 .offer-name { color: var(--sky-lt); }
+  .offer-3 .offer-name { color: var(--gold); }
+
+  .offer-tagline {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .offer-price {
+    font-family: var(--disp);
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .offer-financing {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Outcome strip */
+  .offer-outcome {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .offer-1 .offer-outcome { color: #9fe1cb; background: rgba(29,158,117,0.07); }
+  .offer-2 .offer-outcome { color: #b5d4f4; background: rgba(30,144,255,0.07); }
+  .offer-3 .offer-outcome { color: #fac775; background: rgba(245,166,35,0.07); }
+
+  .outcome-label {
+    font-family: var(--disp);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  /* Features */
+  .offer-features {
+    padding: 20px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.4;
+  }
+  .feature:last-child { border-bottom: none; }
+
+  .feature-icon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .offer-1 .feature-icon { background: rgba(29,158,117,0.2); color: #5dcaa5; }
+  .offer-2 .feature-icon { background: rgba(30,144,255,0.2); color: var(--sky-lt); }
+  .offer-3 .feature-icon { background: rgba(245,166,35,0.2); color: var(--gold); }
+
+  /* Launch Pad tag */
+  .launch-pad-tag {
+    margin: 4px 0 0;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .offer-2 .launch-pad-tag,
+  .offer-3 .launch-pad-tag {
+    background: rgba(245,166,35,0.12);
+    color: var(--gold);
+    border: 1px solid rgba(245,166,35,0.2);
+  }
+
+  /* CTA */
+  .offer-cta {
+    padding: 20px 24px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    font-family: var(--disp);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+    text-decoration: none;
+    margin-bottom: 10px;
+  }
+  .cta-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .offer-1 .cta-btn { background: #1d9e75; color: var(--white); }
+  .offer-2 .cta-btn { background: var(--sky); color: var(--white); }
+  .offer-3 .cta-btn { background: var(--gold); color: var(--navy); }
+
+  .cta-sub {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── UPGRADE PATH STRIP ── */
+  .upgrade-strip {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 5% 56px;
+  }
+
+  .upgrade-inner {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .upgrade-label {
+    font-family: var(--disp);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sky-lt);
+    flex-shrink: 0;
+  }
+
+  .upgrade-path {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+
+  .path-step {
+    font-family: var(--disp);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border-radius: 3px;
+  }
+  .path-step.s1 { background: rgba(29,158,117,0.15); color: #5dcaa5; }
+  .path-step.s2 { background: rgba(30,144,255,0.15); color: var(--sky-lt); }
+  .path-step.s3 { background: rgba(245,166,35,0.15); color: var(--gold); }
+
+  .path-arrow {
+    font-size: 16px;
+    color: var(--muted);
+    padding: 0 4px;
+  }
+
+  .upgrade-desc {
+    font-size: 13px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* ── FINANCING STRIP ── */
+  .financing-strip {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 5%;
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .fin-label {
+    font-family: var(--disp);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sky-lt);
+    margin-bottom: 10px;
+  }
+
+  .fin-title {
+    font-family: var(--disp);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .fin-sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 20px;
+    font-weight: 300;
+  }
+
+  .fin-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .fin-item {
+    font-family: var(--disp);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .fin-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--sky-lt);
+    flex-shrink: 0;
+  }
+
+  /* ── LAUNCH PAD SECTION ── */
+  .launch-pad-section {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 5% 80px;
+  }
+
+  .lp-card {
+    border: 1px solid rgba(245,166,35,0.25);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .lp-header {
+    background: rgba(245,166,35,0.08);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(245,166,35,0.15);
+  }
+
+  .lp-title-group {}
+  .lp-eyebrow {
+    font-family: var(--disp);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .lp-title {
+    font-family: var(--disp);
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .lp-value {
+    font-family: var(--disp);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .lp-value strong {
+    font-size: 22px;
+    color: var(--gold);
+  }
+
+  .lp-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .lp-item {
+    padding: 24px 28px;
+    border-right: 1px solid rgba(245,166,35,0.1);
+  }
+  .lp-item:last-child { border-right: none; }
+
+  .lp-num {
+    font-family: var(--disp);
+    font-size: 36px;
+    font-weight: 900;
+    color: rgba(245,166,35,0.15);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .lp-item-title {
+    font-family: var(--disp);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: var(--white);
+  }
+
+  .lp-item-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+
+  .lp-item-val {
+    font-family: var(--disp);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+
+  .lp-footer {
+    padding: 16px 32px;
+    border-top: 1px solid rgba(245,166,35,0.15);
+    background: rgba(245,166,35,0.04);
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 28px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-brand {
+    font-family: var(--disp);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .footer-brand span { color: var(--sky-lt); }
+
+  footer p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .offer { animation: fadeUp 0.5s ease both; }
+  .offer-1 { animation-delay: 0.1s; }
+  .offer-2 { animation-delay: 0.2s; }
+  .offer-3 { animation-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    .offers { grid-template-columns: 1fr; gap: 16px; }
+    .offer:first-child, .offer:last-child { border-radius: 10px; }
+    .offer:not(:first-child) { border-left: 1px solid var(--border); }
+    .offer.featured { transform: none; }
+    .lp-items { grid-template-columns: 1fr; }
+    .lp-item { border-right: none; border-bottom: 1px solid rgba(245,166,35,0.1); }
+    .lp-item:last-child { border-bottom: none; }
+  }
+
+  @media (max-width: 600px) {
+    .upgrade-inner { flex-direction: column; align-items: flex-start; }
+    .fin-items { gap: 14px; }
+  }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    body::before { display: none; }
+    .offer { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="brand">Aero Global Aviation Academy</div>
+  <h1 class="main-headline">
+    Your Path to the<br>
+    <span class="line2">Flight Deck</span>
+  </h1>
+  <p class="main-sub">Three structured programs designed to take you from zero experience to a six-figure airline career — with flat-rate pricing, no hidden costs, and full financing available.</p>
+  <div class="header-pills">
+    <span class="pill">Kissimmee, FL — KISM</span>
+    <span class="pill">1-on-1 Instruction</span>
+    <span class="pill">All FAA Fees Included</span>
+    <span class="pill">Stratus Financial</span>
+    <span class="pill">BBB Accredited</span>
+  </div>
+</header>
+
+<!-- SECTION INTRO -->
+<div class="section-intro">
+  <div class="eyebrow">Choose your program</div>
+  <h2>Three paths. One destination.</h2>
+  <p>Whether you want to test the skies, fly commercially, or go all the way to the airlines — there's a program built for exactly where you are right now.</p>
+</div>
+
+<!-- OFFERS -->
+<div class="offers">
+
+  <!-- OFFER 1: WINGS FOUNDATION -->
+  <div class="offer offer-1">
+    <div class="offer-badge">
+      <span>Starter</span>
+      <span class="badge-dot"></span>
+    </div>
+    <div class="offer-header">
+      <div class="offer-name">Wings Foundation</div>
+      <div class="offer-tagline">Test the skies before committing to a full career path. Your Private Pilot License — the foundation of everything.</div>
+      <div class="offer-price">$15,000 – $35,000</div>
+      <div class="offer-financing">Pay-as-you-go available + full Stratus financing</div>
+    </div>
+    <div class="offer-outcome">
+      <span class="outcome-label">You walk away with</span>
+      Your FAA Private Pilot License and the confidence to decide what comes next.
+    </div>
+    <div class="offer-features">
+      <div class="feature"><span class="feature-icon">✓</span>Private Pilot License (PPL)</div>
+      <div class="feature"><span class="feature-icon">✓</span>1-on-1 with a dedicated CFI</div>
+      <div class="feature"><span class="feature-icon">✓</span>Ground school access included</div>
+      <div class="feature"><span class="feature-icon">✓</span>Simulator hours included</div>
+      <div class="feature"><span class="feature-icon">✓</span>Flexible scheduling around your life</div>
+      <div class="feature"><span class="feature-icon">✓</span>Clear upgrade path to Career Pilot or Elite</div>
+    </div>
+    <div class="offer-cta">
+      <a href="#" class="cta-btn">Book an Enrollment Call</a>
+      <div class="cta-sub">Free 30-min call with a flight training advisor</div>
+    </div>
+  </div>
+
+  <!-- OFFER 2: CAREER PILOT PROGRAM -->
+  <div class="offer offer-2 featured">
+    <div class="offer-badge">
+      <span>Career Track</span>
+      <span class="badge-dot"></span>
+    </div>
+    <div class="offer-header">
+      <div class="offer-name">Career Pilot Program</div>
+      <div class="offer-tagline">The core career path for aspiring professional pilots. PPL through Commercial with Instrument Rating.</div>
+      <div class="offer-price">$75,000 – $102,000</div>
+      <div class="offer-financing">Full financing available via Stratus Financial</div>
+    </div>
+    <div class="offer-outcome">
+      <span class="outcome-label">You walk away with</span>
+      FAA Commercial certificate + Instrument Rating. Eligible for paid flying work.
+    </div>
+    <div class="offer-features">
+      <div class="feature"><span class="feature-icon">✓</span>Private Pilot License (PPL)</div>
+      <div class="feature"><span class="feature-icon">✓</span>Instrument Rating (IR)</div>
+      <div class="feature"><span class="feature-icon">✓</span>Commercial Pilot certificate</div>
+      <div class="feature"><span class="feature-icon">✓</span>Multi-engine rating</div>
+      <div class="feature"><span class="feature-icon">✓</span>1-on-1 dedicated CFI throughout</div>
+      <div class="feature"><span class="feature-icon">✓</span>Structured syllabus + milestone check-ins</div>
+      <div class="feature"><span class="feature-icon">✓</span>Checkride prep guarantee</div>
+      <div class="feature"><span class="feature-icon">✓</span>Career guidance sessions</div>
+      <div class="feature"><span class="feature-icon">✓</span>All FAA testing & checkride fees included</div>
+      <div class="launch-pad-tag">★ The Launch Pad bundle included — $1,294 value</div>
+    </div>
+    <div class="offer-cta">
+      <a href="#" class="cta-btn">Book an Enrollment Call</a>
+      <div class="cta-sub">Free 30-min call with a flight training advisor</div>
+    </div>
+  </div>
+
+  <!-- OFFER 3: AIRLINE PILOT ELITE -->
+  <div class="offer offer-3">
+    <div class="offer-badge">
+      <span>Elite</span>
+      <span class="badge-dot"></span>
+    </div>
+    <div class="offer-header">
+      <div class="offer-name">Airline Pilot Elite</div>
+      <div class="offer-tagline">Zero to CFII. Every certificate you need to reach 1,500 hours and step into an airline hiring program.</div>
+      <div class="offer-price">$90,000 – $120,000</div>
+      <div class="offer-financing">Full financing + pay-as-you-go via Stratus Financial</div>
+    </div>
+    <div class="offer-outcome">
+      <span class="outcome-label">You walk away with</span>
+      CFII rating, 1,500-hour path, and a direct route to United Aviate, Delta Propel & SkyWest.
+    </div>
+    <div class="offer-features">
+      <div class="feature"><span class="feature-icon">✓</span>Full PPL → Instrument → Commercial pathway</div>
+      <div class="feature"><span class="feature-icon">✓</span>Certified Flight Instructor (CFI)</div>
+      <div class="feature"><span class="feature-icon">✓</span>CFI – Instrument (CFII)</div>
+      <div class="feature"><span class="feature-icon">✓</span>Multi-Engine Instructor (MEI) ratings</div>
+      <div class="feature"><span class="feature-icon">✓</span>Instructor path to build 1,500 ATP hours at AGA</div>
+      <div class="feature"><span class="feature-icon">✓</span>Priority scheduling + fleet access</div>
+      <div class="feature"><span class="feature-icon">✓</span>Airline cadet program guidance & applications</div>
+      <div class="feature"><span class="feature-icon">✓</span>1-on-1 monthly career coaching</div>
+      <div class="feature"><span class="feature-icon">✓</span>Alumni network + referrals</div>
+      <div class="feature"><span class="feature-icon">✓</span>All FAA testing & checkride fees included</div>
+      <div class="launch-pad-tag">★ The Launch Pad bundle included — $1,294 value</div>
+    </div>
+    <div class="offer-cta">
+      <a href="#" class="cta-btn">Book an Enrollment Call</a>
+      <div class="cta-sub">Free 30-min call with a flight training advisor</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- UPGRADE PATH -->
+<div class="upgrade-strip">
+  <div class="upgrade-inner">
+    <div class="upgrade-label">Upgrade path</div>
+    <div class="upgrade-path">
+      <span class="path-step s1">Wings Foundation</span>
+      <span class="path-arrow">→</span>
+      <span class="path-step s2">Career Pilot Program</span>
+      <span class="path-arrow">→</span>
+      <span class="path-step s3">Airline Pilot Elite</span>
+    </div>
+    <div class="upgrade-desc">PPL hours credited when upgrading — you never start over.</div>
+  </div>
+</div>
+
+<!-- FINANCING STRIP -->
+<div class="financing-strip">
+  <div class="fin-label">Financing</div>
+  <div class="fin-title">No financial barrier to your flight deck</div>
+  <div class="fin-sub">Every program is financeable through Stratus Financial. Our Financing Fast-Track Concierge walks you through the application step by step.</div>
+  <div class="fin-items">
+    <div class="fin-item"><span class="fin-dot"></span>Full program financing</div>
+    <div class="fin-item"><span class="fin-dot"></span>Pay-as-you-go option</div>
+    <div class="fin-item"><span class="fin-dot"></span>Stratus Financial partner</div>
+    <div class="fin-item"><span class="fin-dot"></span>Guided application support</div>
+    <div class="fin-item"><span class="fin-dot"></span>No surprise billing</div>
+  </div>
+</div>
+
+<!-- LAUNCH PAD SECTION -->
+<div class="launch-pad-section">
+  <div class="lp-card">
+    <div class="lp-header">
+      <div class="lp-title-group">
+        <div class="lp-eyebrow">Included with Career Pilot & Elite enrollment</div>
+        <div class="lp-title">The Launch Pad Bundle</div>
+      </div>
+      <div class="lp-value">Value <strong>$1,294</strong> — yours free</div>
+    </div>
+    <div class="lp-items">
+      <div class="lp-item">
+        <div class="lp-num">01</div>
+        <div class="lp-item-title">Airline Career Roadmap Kit</div>
+        <div class="lp-item-desc">Your complete 8-phase guide from first lesson to airline first officer — with salary data, cadet program details, and a 24-month milestone calendar.</div>
+        <div class="lp-item-val">Value $497</div>
+      </div>
+      <div class="lp-item">
+        <div class="lp-num">02</div>
+        <div class="lp-item-title">Written Test Prep Vault</div>
+        <div class="lp-item-desc">Every study tool and resource for every written exam in your program — curated by our instructors so you never get stuck on a written test.</div>
+        <div class="lp-item-val">Value $297</div>
+      </div>
+      <div class="lp-item">
+        <div class="lp-num">03</div>
+        <div class="lp-item-title">Financing Fast-Track Concierge</div>
+        <div class="lp-item-desc">A personal walkthrough of your Stratus Financial application with a team member — so you know exactly what to submit and what to expect.</div>
+        <div class="lp-item-val">Value $500</div>
+      </div>
+    </div>
+    <div class="lp-footer">Included at no additional cost with Career Pilot Program and Airline Pilot Elite enrollments. Not sold separately.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">AERO GLOBAL <span>AVIATION</span></div>
+  <p>4009 Fifth St Suite 103, Kissimmee FL 34741 &nbsp;|&nbsp; (321) 270-9900 &nbsp;|&nbsp; info@aeroglobalaviation.com</p>
+  <p>aeroglobalaviation.com</p>
+</footer>
+
+</body>
+</html>
